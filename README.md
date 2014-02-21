@@ -1,0 +1,4 @@
+Kinetoscope
+===========
+
+Slideshow wordpress plugin.
