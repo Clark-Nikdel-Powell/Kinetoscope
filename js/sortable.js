@@ -2,6 +2,7 @@ jQuery(document).ready(function($) {
 	$(function() {
 		$(".kin-slideshow").sortable({
 			placeholder: "kin-slides kin-placeholder"
+			,revert: true
 			,update: function(event, ui) {
 
 				var order=[];
@@ -37,7 +38,28 @@ jQuery(document).ready(function($) {
 					}
 				});
 			}
+		}).disableSelection();
+
+		
+		$(".kin-trash").droppable({
+			hoverClass: "kin-hover"
+			,tolerance: "pointer"
+			,drop: function(event, ui) {
+				$.ajax({
+					type:"POST"
+					,url: ajaxurl
+					,data: {
+						action: "kinetoscope_remove"
+						,id: ui.draggable.data("id")
+						,term_id: ui.draggable.parent("ul").data("id")
+					}
+					,processData: true
+					,success: function(response) {
+						ui.draggable.remove();
+					}
+				});
+				
+			}
 		});
-		$(".kin-slideshow").disableSelection();
 	});
 });

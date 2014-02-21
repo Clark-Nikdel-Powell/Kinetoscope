@@ -3,28 +3,31 @@
 	<ul class="kin-slideshow" id="<?php echo $show->slug ?>" data-id="<?php echo $show->term_id ?>">
 		<?php
 
-		$slides = get_slides($show);
+		$slides = get_slideshow($show->slug);
 		if ($slides && count($slides)>0) {
 
 			foreach ($slides as $key => $slide) {
-
-				$photo = '';
-				$fiid = get_post_meta($slide->ID, '_thumbnail_id', true);
-				if ($fiid) {
-					$url = wp_get_attachment_image_src($fiid, 'medium');
-					if (isset($url[0]) && $url[0]) $photo = $url[0];
-				}
-
 			?>
-		<li class="kin-slides" id="<?php echo $slide->post_name ?>" data-id="<?php echo $slide->ID ?>" style="background-image:url('<?php echo $photo ?>');"><pos><?php echo ($key+1) ?>.</pos><?php echo $slide->post_title ?></li>
+		<li class="kin-slides<?php if($editslide == true) echo ' kin-slides-small'; ?>" id="<?php echo $slide->post_name ?>" data-id="<?php echo $slide->ID ?>" <?php if (isset($slide->photo) && $slide->photo) echo 'style="background-image:url(\''.$slide->photo.'\');"' ?>>
+			<pos><?php echo ($key+1) ?>.</pos><?php echo $slide->post_title ?>
+		</li>
 			<?php
 			}
 		}
 		else {
-		?>
+			?>
 		No slides have been added to this slideshow.
-		<?php
+			<?php	
 		}
 		?>
 	</ul>
+	<?php
+	if ($slides && count($slides)>0) {
+		?>
+	<ul>
+		<li class="kin-slides kin-placeholder kin-trash<?php if($editslide == true) echo ' kin-slides-small'; ?>"></li>
+	</ul>
+		<?php
+	}
+	?>
 	</p>

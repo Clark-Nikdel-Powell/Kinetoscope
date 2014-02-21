@@ -79,8 +79,8 @@ function kin_create_tables() {
 		CREATE TABLE ".$table." (
 			meta_id int(11) NOT NULL AUTO_INCREMENT,
 			term_id int(11),
-			meta_key TEXT,
-			meta_value TEXT,
+			post_id int(11),
+			position int(11),
 			UNIQUE KEY id (meta_id)
 		);";
 		require_once(ABSPATH.'wp-admin/includes/upgrade.php');
@@ -102,7 +102,7 @@ function kin_create_meta($posttype) {
 
 	add_meta_box(
 		'kin_position'
-		,'Position'
+		,'Slideshow Positions'
 		,'kin_print_order'
 		,$posttype
 		,'normal'
@@ -124,13 +124,53 @@ function kin_save_order() {
 	
 	global $wpdb;
 	$pre = $wpdb->prefix;
+	
+	echo 'working';
 
-	$exists = $wpdb->get_row("SELECT meta_id FROM ".$pre.KIN_TBLNAME." WHERE term_id = '".$_POST['id']."' AND meta_key = 'order' LIMIT 1", ARRAY_A);
-	if ($exists)
-		$wpdb->query("UPDATE ".$pre.KIN_TBLNAME." SET meta_value = '".$_POST['data']."' WHERE meta_id = '".$exists['meta_id']."'");
-	else
-		$wpdb->query("INSERT INTO ".$pre.KIN_TBLNAME." (term_id, meta_key, meta_value) VALUES ('".$_POST['id']."','order','".$_POST['data']."')");
+	if ($_POST 
+		&& isset($_POST['id']) 
+		&& isset($_POST['data']) 
+		&& $slides = json_decode($_POST['data'])
+	) {
+		$wpdb->query("DELETE FROM ".$pre.KIN_TBLNAME." WHERE term_id = '".$_POST['id']."'");
+		foreach ($slides as $key=>$slide) {
+		
+			$wpdb->query("
+				INSERT INTO ".$pre.KIN_TBLNAME." (
+					term_id
+					,post_id
+					,position
+				) VALUES (
+					'".$_POST['id']."'
+					,'".$slide."'
+					,'".$key."'
+				)
+			");
+		}
+	}
 
+	die();
+}
+
+
+function kin_remove_slide() {
+	if ($_POST 
+		&& isset($_POST['id'])
+		&& isset($_POST['term_id'])
+	) {
+
+		$terms = wp_get_post_terms($_POST['id'], 'slideshow');
+		$keep = array();
+		foreach ($terms as $term) {
+			echo $term->term_id.',';
+			if ($term->term_id != $_POST['term_id']) {
+				array_push($keep,$term->term_id);
+			}
+		}
+		
+		if ($keep && count($keep)>0) wp_set_post_terms($_POST['id'], $keep, 'slideshow');
+		else wp_delete_object_term_relationships($_POST['id'],'slideshow');
+	}
 	die();
 }
 
@@ -156,14 +196,15 @@ function kin_save_meta($post_id) {
 }
 
 
-function get_slides($slideshow) {
+function get_slideshow($slideshow) {
 
-	if ($slideshow && term_exists($slideshow->slug,'slideshow')) {
+	if ($slideshow && term_exists($slideshow,'slideshow') && $term = get_term_by('slug',$slideshow,'slideshow')) {
 		$slides = get_posts(
 			array(
 				'post_type' => 'slide'
+				,'post_status' => 'publish'
 				,'posts_per_page' => -1
-				,'slideshow' => $slideshow->slug
+				,'slideshow' => $slideshow
 			)
 		);
 
@@ -172,29 +213,47 @@ function get_slides($slideshow) {
 		global $wpdb;
 		$pre = $wpdb->prefix;
 
-		$request = $wpdb->get_row("SELECT meta_value FROM ".$pre.KIN_TBLNAME." WHERE term_id = '".$slideshow->term_id."' LIMIT 1",ARRAY_A);
-		if ($request && !is_wp_error($request)) {
-			if (isset($request['meta_value'])) {
-				$positionsJSON = $request['meta_value'];
-				$positions = json_decode($positionsJSON);
+		$stored = $wpdb->get_results("SELECT post_id,position FROM ".$pre.KIN_TBLNAME." WHERE term_id = '".$term->term_id."' ORDER BY position ASC",ARRAY_A);
+		if ($stored && !is_wp_error($stored)) {
+				
+				$positions = array();
+				foreach ($stored as $entry) {
+					$positions[$entry['position']] = $entry['post_id'];
+				}
 
 				$reordered = array();
 				foreach ($slides as $key => $slide) {
+
+					$fiid = get_post_meta($slide->ID, '_thumbnail_id', true);
+					if ($fiid) {
+						$url = wp_get_attachment_image_src($fiid, 'medium');
+						if (isset($url[0]) && $url[0]) {
+							$slide->photo = $url[0];
+							$slides[$key]->photo = $url[0];
+						}
+					}
+
+					$pl = get_post_meta($slide->ID, 'kin_link', true);
+					if ($pl) {
+						$slide->link = $pl;
+						$slides[$key]->link = $pl;
+					}
+
 					$position = array_search($slide->ID,$positions);
 					if ($position !== false) {
 						$reordered[$position] = $slide;
 						unset($slides[$key]);
 					}
 				}
-				foreach ($slides as $key => $slide) array_push($reordered,$slide);
 
 				if ($reordered && is_array($reordered) && count($reordered)>0) {
 					ksort($reordered);
+					$reordered = array_merge($reordered,$slides);
 					unset($slides);
 					$slides = $reordered;
 				}
 				else $slides = $temp;
-			}
+			
 		}
 		return $slides;
 	}
@@ -202,10 +261,20 @@ function get_slides($slideshow) {
 		return 0;
 }
 
+function kin_delete_post_order($pid) {
+	if ($pid) {
+		global $wpdb;
+		$pre = $wpdb->prefix;
+		$wpdb->query("DELETE FROM ".$pre.KIN_TBLNAME." WHERE post_id = '".$pid."'");
+	}
+}
+
 
 function kin_print_order() {
 	require_once(KIN_PATH.'html/sort-template.php');
 	wp_enqueue_script('jquery-ui-sortable');
+	wp_enqueue_script('jquery-ui-draggable');
+	wp_enqueue_script('jquery-ui-droppable');
 	wp_enqueue_script('kin-sortable',plugin_dir_url(__FILE__).'js/sortable.js');
 }
 
