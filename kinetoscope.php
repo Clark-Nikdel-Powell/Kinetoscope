@@ -27,5 +27,6 @@ DEFINE('KIN_PATH', plugin_dir_path(__FILE__));
 DEFINE('KIN_TBLNAME', 'kinetoscope');
 
 require_once('functions.php');
+require_once('functions-backend.php');
 require_once('actions.php');
 ?>
