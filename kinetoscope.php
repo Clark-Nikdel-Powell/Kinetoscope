@@ -23,10 +23,16 @@
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 	
-DEFINE('KIN_PATH', plugin_dir_path(__FILE__));
-DEFINE('KIN_TBLNAME', 'kinetoscope');
+DEFINE('KIN_PATH', 		plugin_dir_path(__FILE__));
+DEFINE('KIN_TBLNAME', 	'kinetoscope');
+DEFINE('KIN_SETNAME', 	'kinetoscope-settings');
+DEFINE('KIN_DISPNAME', 	'Kinetoscope');
+DEFINE('SLIDE_TAX',		'slide');
+DEFINE('SLIDESHOW_TAX',	'slideshow');
 
-require_once('functions.php');
+
+require_once('functions-frontend.php');
 require_once('functions-backend.php');
+require_once('settings.php');
 require_once('actions.php');
 ?>

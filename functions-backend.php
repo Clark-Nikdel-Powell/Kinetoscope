@@ -1,8 +1,14 @@
 <?php
 
+/**
+ * Functions Used For the Plugin (backend)
+ * @package Kinetoscope
+ * @since 0.1.0
+ */
+
 function kin_create_objects() {
 
-	$ptax = 'slide';
+	$ptax = SLIDE_TAX;
 	$psing = ucwords($ptax);
 	$pplur = $psing.'s';
 
@@ -34,7 +40,7 @@ function kin_create_objects() {
 	register_post_type($ptax,$args);
 
 
-	$ttax = 'slideshow';
+	$ttax = SLIDESHOW_TAX;
 	$tsing = ucwords($ttax);
 	$tplur = $tsing.'s';
 
@@ -58,17 +64,6 @@ function kin_create_objects() {
 		,'show_admin_column' => true
 	);
 	register_taxonomy($ttax,$ptax,$args);
-
-
-	add_action(
-		'add_meta_boxes'
-		,function($ptax) { 
-			kin_create_meta($ptax);
-		}
-	);
-	add_action('save_post', 'kin_save_meta');
-
-	kin_create_tables();
 }
 
 
@@ -90,7 +85,10 @@ function kin_create_tables() {
 }
 
 
-function kin_create_meta($posttype) {
+function kin_create_meta() {
+
+	$posttype = SLIDE_TAX;
+
 	$key = 'link';
 	add_meta_box(
 		'kin_'.$key

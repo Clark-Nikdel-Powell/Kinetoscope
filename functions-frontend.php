@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Functions To Be Called From The Front End
+ * @package Kinetoscope
+ * @since 0.1.0
+ */
+
 function get_slideshow($slideshow) {
 
 	if ($slideshow && term_exists($slideshow,'slideshow') && $term = get_term_by('slug',$slideshow,'slideshow')) {
