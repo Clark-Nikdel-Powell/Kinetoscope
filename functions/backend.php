@@ -206,10 +206,13 @@ function kin_delete_post_order($pid) {
 
 function kin_print_order() {
 	require_once(KIN_PATH.'html/sort-template.php');
+
 	wp_enqueue_script('jquery-ui-sortable');
 	wp_enqueue_script('jquery-ui-draggable');
 	wp_enqueue_script('jquery-ui-droppable');
-	wp_enqueue_script('kin-sortable',plugin_dir_url(__FILE__).'js/sortable.js');
+
+	wp_enqueue_script('kin-sortable',KIN_URL.'js/sortable.js',null,true);
+	wp_enqueue_style('kin-sortable-style',KIN_URL.'css/sortable.css');
 }
 
 
