@@ -7,17 +7,9 @@
  */
 
 function kin_register_options() {
-	global $kin_settings;
-	global $localized;
-	
-
-	foreach ($kin_settings as $setting) {
-		register_setting(KIN_SETNAME,$setting['key']);
-
-		if ($setting['type']=='dynamic') {
-			array_push($localized,$setting);
-		}
-	}
+	register_setting(KIN_SETNAME,'kin_duration');
+	register_setting(KIN_SETNAME,'kin_transition');
+	register_setting(KIN_SETNAME,'kin_fields');
 }
 
 
@@ -28,14 +20,26 @@ function kin_create_options() {
 
 function kin_options_page() {
 
-	global $localized;
+	wp_enqueue_script('kin-dynamic',KIN_URL.'js/dynamic.js',null, true);
+	wp_enqueue_style('kin-dynamic-style', KIN_URL.'css/dynamic.css');
+
+	$custom_fields = kin_load_meta();
+	$custom_fields = json_decode($custom_fields);
+	
+	if (!$custom_fields) $custom_fields = array();
+
+	wp_localize_script('kin-dynamic', 'kin_fields', $custom_fields);
 
 	require_once(KIN_PATH.'html/settings-template.php');
+}
 
-	wp_enqueue_script('kin-dynamic',KIN_URL.'js/dynamic.js',null, true);
 
-	if (count($localized)>0) 
-		wp_localize_script('kin-dynamic','kinsettings',$localized);
+function kin_load_meta() {
+	$options = get_option('kin_fields');
+	if ($options && !is_wp_error($options))
+		return $options;
+	else
+		return false;
 }
 
 ?>

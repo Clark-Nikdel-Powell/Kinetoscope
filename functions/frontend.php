@@ -34,21 +34,6 @@ function get_slideshow($slideshow) {
 				$reordered = array();
 				foreach ($slides as $key => $slide) {
 
-					$fiid = get_post_meta($slide->ID, '_thumbnail_id', true);
-					if ($fiid) {
-						$url = wp_get_attachment_image_src($fiid, 'medium');
-						if (isset($url[0]) && $url[0]) {
-							$slide->photo = $url[0];
-							$slides[$key]->photo = $url[0];
-						}
-					}
-
-					$pl = get_post_meta($slide->ID, 'kin_link', true);
-					if ($pl) {
-						$slide->link = $pl;
-						$slides[$key]->link = $pl;
-					}
-
 					$position = array_search($slide->ID,$positions);
 					if ($position !== false) {
 						$reordered[$position] = $slide;
@@ -65,6 +50,33 @@ function get_slideshow($slideshow) {
 				else $slides = $temp;
 			
 		}
+
+		$metas = get_option('kin_fields');
+		foreach ($slides as $key => $slide) {
+
+			$fiid = get_post_meta($slide->ID, '_thumbnail_id', true);
+			if ($fiid) {
+				$url = wp_get_attachment_image_src($fiid, 'medium');
+				if (isset($url[0]) && $url[0]) {
+					$slide->photo = $url[0];
+					$slides[$key]->photo = $url[0];
+				}
+			}
+			
+			if ($metas) {
+				$metas = json_decode($metas);
+				if (count($metas)>0) {
+					$slides[$key]->meta = array();
+					foreach ($metas as $metakey=>$meta) {
+						$val = get_post_meta($slide->ID, $metakey, true);
+						if ($val) {
+							$slides[$key]->meta[$metakey] = $val;
+						}
+					}
+				}
+			}
+		}
+
 		return $slides;
 	}
 	else

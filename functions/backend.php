@@ -88,16 +88,21 @@ function kin_create_tables() {
 function kin_create_meta() {
 
 	$posttype = SLIDE_TAX;
-
-	$key = 'link';
-	add_meta_box(
-		'kin_'.$key
-		,ucwords($key)
-		,'kin_print_meta'
-		,$posttype
-		,'normal'
-		,'core'
-	);
+	$metas = get_option('kin_fields');
+	if ($metas) {
+		$metas = json_decode($metas);
+		if (count($metas)>0) {
+			$key = 'meta';
+			add_meta_box(
+				'kin_'.$key 
+				,ucwords(SLIDE_TAX.' '.$key)
+				,'kin_print_meta'
+				,$posttype
+				,'normal'
+				,'core'
+			);
+		}
+	}
 
 	add_meta_box(
 		'kin_position'
@@ -112,9 +117,33 @@ function kin_create_meta() {
 
 
 function kin_print_meta($post) {
-	$val = get_post_meta($post->ID,'kin_link',true);
+
 	wp_nonce_field('kin_print_meta', 'kin_nonce');
-	echo '<input type="text" class="widefat" name="kin_link" value="'.$val.'" />';
+
+	$metas = get_option('kin_fields');
+	if ($metas) {
+		$metas = json_decode($metas);
+		if (count($metas)>0) {
+			foreach ($metas as $key=>$meta) {
+				echo '<p>';
+				echo '<strong>'.$meta->name.'</strong>';
+
+				if ($meta->type == 'textarea')
+					echo '<textarea class="widefat" name="'.$key.'">'.get_post_meta($post->ID,$key,true).'</textarea>';
+				elseif ($meta->type == 'image') {
+					echo '<br/>';
+					$img = '<span class="wp-media-buttons-icon"></span> ';
+					echo '<a href="#" id="insert-media-button" class="button insert-media add_media" data-editor="' . esc_attr( $key ) . '" title="' . esc_attr__( 'Add Media' ) . '">' . $img . __( 'Add Media' ) . '</a>';
+					echo '<div id="'.$key.'"></div>';
+				}
+				else
+					echo '<input type="text" class="widefat" name="'.$key.'" value="'.get_post_meta($post->ID,$key,true).'" />';
+
+				echo '</p>';
+			}
+		}
+	}
+	
 }
 
 
@@ -190,8 +219,20 @@ function kin_save_meta($post_id) {
 	if (!current_user_can('edit_post',$post_id))
 		return $post_id;
 
-	$data = sanitize_text_field($_POST['kin_link']);
-	update_post_meta($post_id,'kin_link',$data);
+	$metas = get_option('kin_fields');
+	if ($metas) {
+		$metas = json_decode($metas);
+		if (count($metas)>0) {
+			foreach ($metas as $key=>$meta) {
+				if (isset($_POST[$key])) {
+					$data = sanitize_text_field($_POST[$key]);
+					update_post_meta($post_id,$key,$data);
+				}
+			}
+		}
+	}
+
+	
 }
 
 
