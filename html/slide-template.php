@@ -8,7 +8,7 @@
 
 			foreach ($slideshow['slides'] as $key => $slide) {
 			?>
-		<li class="kin-slides<?php if($editslide == true) echo ' kin-slides-small'; ?>" id="<?php echo $slide->post_name ?>" data-id="<?php echo $slide->ID ?>" <?php if (isset($slide->photo) && $slide->photo) echo 'style="background-image:url(\''.$slide->photo.'\');"' ?>>
+		<li class="kin-slides<?php if($editslide == true) echo ' kin-slides-small'; ?>" id="<?php echo $slide->post_name ?>" data-id="<?php echo $slide->ID ?>" <?php if (isset($slide->featured_image) && $slide->featured_image) echo 'style="background-image:url(\''.$slide->featured_image['url'].'\');"' ?>>
 			<pos><?php echo ($key+1) ?>.</pos><?php echo $slide->post_title ?>
 		</li>
 			<?php
