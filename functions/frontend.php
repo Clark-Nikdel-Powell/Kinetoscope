@@ -78,7 +78,9 @@ function get_slideshow($showname) {
 			$fiid = get_post_meta($slide->ID, '_thumbnail_id',true);
 			if ($fiid) {
 				$data = wp_get_attachment_metadata($fiid,true);
+				$url = wp_get_attachment_url($fiid);
 				if (isset($data) && $data) {
+					if ($url) $data['url'] = $url;
 					$slides[$key]->featured_image = $data;
 				}
 			}
@@ -91,7 +93,9 @@ function get_slideshow($showname) {
 					if ($val) {
 						if ($meta->type=='image') {
 							$data = wp_get_attachment_metadata($val,true);
+							$url = wp_get_attachment_url($val);
 							if (isset($data) && $data) {
+								if ($url) $data['url'] = $url;
 								$slides[$key]->meta[$metakey] = $data;
 							}
 						}
