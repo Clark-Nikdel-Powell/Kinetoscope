@@ -22,16 +22,28 @@
 	along with this program; if not, write to the Free Software
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-	
+
+
+// Paths
 DEFINE('KIN_PATH', 		plugin_dir_path(__FILE__));
 DEFINE('KIN_URL',		plugin_dir_url(__FILE__));
+
+// Databse options
 DEFINE('KIN_TBLNAME', 	'kinetoscope');
+
+// Post Type & Taxonomy names
 DEFINE('KIN_SETNAME', 	'kinetoscope-settings');
 DEFINE('KIN_DISPNAME', 	'Kinetoscope');
 DEFINE('SLIDE_TAX',		'slide');
 DEFINE('SLIDESHOW_TAX',	'slideshow');
 
+// Option Keys
+DEFINE('KIN_OPTION_DURATION',	'_kin_duration');
+DEFINE('KIN_OPTION_TRANSITION',	'_kin_transition');
+DEFINE('KIN_OPTION_FIELDS',		'_kin_fields');
 
+
+// Functions
 require_once(KIN_PATH.'functions/frontend.php');
 require_once(KIN_PATH.'functions/backend.php');
 require_once(KIN_PATH.'functions/settings.php');

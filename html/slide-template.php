@@ -3,10 +3,10 @@
 	<ul class="kin-slideshow" id="<?php echo $show->slug ?>" data-id="<?php echo $show->term_id ?>">
 		<?php
 
-		$slides = get_slideshow($show->slug);
-		if ($slides && count($slides)>0) {
+		$slideshow = get_slideshow($show->slug);
+		if ($slideshow['slides'] && count($slideshow['slides'])>0) {
 
-			foreach ($slides as $key => $slide) {
+			foreach ($slideshow['slides'] as $key => $slide) {
 			?>
 		<li class="kin-slides<?php if($editslide == true) echo ' kin-slides-small'; ?>" id="<?php echo $slide->post_name ?>" data-id="<?php echo $slide->ID ?>" <?php if (isset($slide->photo) && $slide->photo) echo 'style="background-image:url(\''.$slide->photo.'\');"' ?>>
 			<pos><?php echo ($key+1) ?>.</pos><?php echo $slide->post_title ?>
@@ -22,7 +22,7 @@
 		?>
 	</ul>
 	<?php
-	if ($slides && count($slides)>0) {
+	if ($slideshow['slides'] && count($slideshow['slides'])>0) {
 		?>
 	<ul>
 		<li class="kin-slides kin-placeholder kin-trash<?php if($editslide == true) echo ' kin-slides-small'; ?>"></li>

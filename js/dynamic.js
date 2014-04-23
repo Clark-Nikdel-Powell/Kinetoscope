@@ -4,7 +4,7 @@ jQuery(document).ready(function($) {
 	function slugify(val) {
 		val = val.replace(/[^a-zA-Z 0-9-]+/g,'');
 		val = val.toLowerCase();
-		val = val.replace(/\s/g,'-');
+		val = val.replace(/\s/g,'_');
 		return val;
 	};
 
@@ -33,24 +33,24 @@ jQuery(document).ready(function($) {
 		var newname = $("#kin_meta_name_add").val();
 		var newtype = $("#kin_meta_type_add").val();
 
-		if (kin_fields) {
+		if (_kin_fields) {
 			if (newname) {
 
-				var newslug = 'kin-' + slugify(newname);
+				var newslug = '_kin_' + slugify(newname);
 
-				if (!kin_fields[newslug]) {
+				if (!_kin_fields[newslug]) {
 
-					if (quantify(kin_fields)==0) kin_fields = ({});
+					if (quantify(_kin_fields)==0) _kin_fields = ({});
 	
-					kin_fields[newslug] = ({
+					_kin_fields[newslug] = ({
 						 name:newname
 						,type:newtype
 					});
 
-					var json = JSON.stringify(kin_fields);
-					$("#kin_fields").val(json);
+					var json = JSON.stringify(_kin_fields);
+					$("#_kin_fields").val(json);
 					
-					var html = htmlify(kin_fields[newslug],newslug);
+					var html = htmlify(_kin_fields[newslug],newslug);
 					$("#kin_meta_table tr:last").after(html);
 
 				} else alert("This name is already in use. Please think of another.");
@@ -63,17 +63,17 @@ jQuery(document).ready(function($) {
 
 		var toremove = $(this).data("for");
 
-		if (kin_fields[toremove]) delete kin_fields[toremove];
+		if (_kin_fields[toremove]) delete _kin_fields[toremove];
 
 		$("#" + toremove + "_row").remove();
 
-		var json = JSON.stringify(kin_fields);
-		$("#kin_fields").val(json);
+		var json = JSON.stringify(_kin_fields);
+		$("#_kin_fields").val(json);
 	});
 
 
 	$(window).on("load", function() {
-		$.each(kin_fields, function(k,v) {
+		$.each(_kin_fields, function(k,v) {
 			var html = htmlify(this,k);
 			$("#kin_meta_table tr:last").after(html);
 		});

@@ -9,18 +9,18 @@
 		<table class="form-table" style="margin-bottom:20px;">
 		<tr valign="top">
 			<th scope="row">
-			<label for="kin_duration">Slide Duration</label>
+			<label for="<?= KIN_OPTION_DURATION ?>">Slide Duration</label>
 			</th>
 			<td>
-				<input type="number" name="kin_duration" id="kin_duration" class="small-text" value="<?php form_option('kin_duration') ?>"> (seconds)
+				<input type="number" name="<?= KIN_OPTION_DURATION ?>" id="<?= KIN_OPTION_DURATION ?>" class="small-text" value="<?php form_option(KIN_OPTION_DURATION) ?>"> (seconds)
 			</td>
 		</tr>
 		<tr valign="top">
 			<th scope="row">
-			<label for="kin_transition">Transition Speed</label>
+			<label for="<?= KIN_OPTION_TRANSITION ?>">Transition Speed</label>
 			</th>
 			<td>
-				<input type="number" name="kin_transition" id="kin_transition" class="small-text" value="<?php form_option('kin_transition') ?>"> (seconds)
+				<input type="number" name="<?= KIN_OPTION_TRANSITION ?>" id="<?= KIN_OPTION_TRANSITION ?>" class="small-text" value="<?php form_option(KIN_OPTION_TRANSITION) ?>"> (seconds)
 			</td>
 		</tr>
 		<tr valign="top">
@@ -28,7 +28,7 @@
 			<label for="kin_meta">Additional Slide Meta</label>
 			</th>
 			<td>
-				<input type="hidden" name="kin_fields" id="kin_fields" value="<?= form_option('kin_fields') ?>" />
+				<input type="hidden" name="<?= KIN_OPTION_FIELDS ?>" id="<?= KIN_OPTION_FIELDS ?>" value="<?= form_option(KIN_OPTION_FIELDS) ?>" />
 				<table id="kin_meta_table" style="padding:none;border-spacing:0px;">
 				<tr>
 					<td style="padding:0px;"><input type="text" name="kin_meta_name_add" maxlength="30" id="kin_meta_name_add" /></td>

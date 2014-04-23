@@ -88,7 +88,7 @@ function kin_create_tables() {
 function kin_create_meta() {
 
 	$posttype = SLIDE_TAX;
-	$metas = get_option('kin_fields');
+	$metas = get_option(KIN_OPTION_FIELDS);
 	if ($metas) {
 		$metas = json_decode($metas);
 		if (count($metas)>0) {
@@ -120,7 +120,7 @@ function kin_print_meta($post) {
 
 	wp_nonce_field('kin_print_meta', 'kin_nonce');
 
-	$metas = get_option('kin_fields');
+	$metas = get_option(KIN_OPTION_FIELDS);
 	if ($metas) {
 		$metas = json_decode($metas);
 		if (count($metas)>0) {
@@ -143,7 +143,6 @@ function kin_print_meta($post) {
 			}
 		}
 	}
-	
 }
 
 
@@ -219,7 +218,7 @@ function kin_save_meta($post_id) {
 	if (!current_user_can('edit_post',$post_id))
 		return $post_id;
 
-	$metas = get_option('kin_fields');
+	$metas = get_option(KIN_OPTION_FIELDS);
 	if ($metas) {
 		$metas = json_decode($metas);
 		if (count($metas)>0) {
