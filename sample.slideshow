@@ -74,50 +74,65 @@ Array
 
                     [meta] => Array
                         (
-                            [_kin_url] => http://mylink.com
-                            [_kin_background] => Array
+                            [_kin_url] => Array
                                 (
-                                    [width] => 335
-                                    [height] => 223
-                                    [file] => communion-notice.jpg
-                                    [sizes] => Array
-                                        (
-                                            [thumbnail] => Array
-                                                (
-                                                    [file] => communion-notice-150x150.jpg
-                                                    [width] => 150
-                                                    [height] => 150
-                                                    [mime-type] => image/jpeg
-                                                )
-
-                                            [small] => Array
-                                                (
-                                                    [file] => communion-notice-300x199.jpg
-                                                    [width] => 300
-                                                    [height] => 199
-                                                    [mime-type] => image/jpeg
-                                                )
-
-                                        )
-
-                                    [image_meta] => Array
-                                        (
-                                            [aperture] => 0
-                                            [credit] => 
-                                            [camera] => 
-                                            [caption] => 
-                                            [created_timestamp] => 0
-                                            [copyright] => 
-                                            [focal_length] => 0
-                                            [iso] => 0
-                                            [shutter_speed] => 0
-                                            [title] => 
-                                        )
-
-                                    [url] => http://localhost/WP/wp-content/uploads/communion-notice.jpg
+                                    [name] => URL
+                                    [value] => http://mylink.com
                                 )
 
-                            [_kin_comments] => My cool test comments.
+                            [_kin_background] => Array
+                                (
+                                    [name] => Background
+                                    [value] => Array
+                                        (
+                                            [width] => 335
+                                            [height] => 223
+                                            [file] => communion-notice.jpg
+                                            [sizes] => Array
+                                                (
+                                                    [thumbnail] => Array
+                                                        (
+                                                            [file] => communion-notice-150x150.jpg
+                                                            [width] => 150
+                                                            [height] => 150
+                                                            [mime-type] => image/jpeg
+                                                        )
+
+                                                    [small] => Array
+                                                        (
+                                                            [file] => communion-notice-300x199.jpg
+                                                            [width] => 300
+                                                            [height] => 199
+                                                            [mime-type] => image/jpeg
+                                                        )
+
+                                                )
+
+                                            [image_meta] => Array
+                                                (
+                                                    [aperture] => 0
+                                                    [credit] => 
+                                                    [camera] => 
+                                                    [caption] => 
+                                                    [created_timestamp] => 0
+                                                    [copyright] => 
+                                                    [focal_length] => 0
+                                                    [iso] => 0
+                                                    [shutter_speed] => 0
+                                                    [title] => 
+                                                )
+
+                                            [url] => http://localhost/WP/wp-content/uploads/communion-notice.jpg
+                                        )
+
+                                )
+
+                            [_kin_comments] => Array
+                                (
+                                    [name] => Comments
+                                    [value] => My cool test comments.
+                                )
+
                         )
 
                 )

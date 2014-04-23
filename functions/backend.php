@@ -207,7 +207,6 @@ function kin_remove_slide() {
 }
 
 
-
 function kin_save_meta($post_id) {
 	if(!isset( $_POST['kin_nonce']))
 		return $post_id;
