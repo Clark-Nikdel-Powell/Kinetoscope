@@ -118,6 +118,8 @@ function kin_create_meta() {
 
 function kin_print_meta($post) {
 
+	wp_enqueue_script('kin-dynamic',KIN_URL.'js/edit.js',null, true);
+
 	wp_nonce_field('kin_print_meta', 'kin_nonce');
 
 	$metas = get_option(KIN_OPTION_FIELDS);
@@ -132,9 +134,9 @@ function kin_print_meta($post) {
 					echo '<textarea class="widefat" name="'.$key.'">'.get_post_meta($post->ID,$key,true).'</textarea>';
 				elseif ($meta->type == 'image') {
 					echo '<br/>';
-					$img = '<span class="wp-media-buttons-icon"></span> ';
-					echo '<a href="#" id="insert-media-button" class="button insert-media add_media" data-editor="' . esc_attr( $key ) . '" title="' . esc_attr__( 'Add Media' ) . '">' . $img . __( 'Add Media' ) . '</a>';
-					echo '<div id="'.$key.'"></div>';
+					echo '<input type="hidden" name="'.$key.'" />';
+					echo '<a href="#" class="button kin_add_media" data-editor="' . esc_attr( $key ) . '">' . __( 'Add Media' ) . '</a>';
+					echo '<div id="'.$key.'"><img src="'.get_post_meta($post->ID,$key,true).'" /></div>';
 				}
 				else
 					echo '<input type="text" class="widefat" name="'.$key.'" value="'.get_post_meta($post->ID,$key,true).'" />';
