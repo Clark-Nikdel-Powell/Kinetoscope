@@ -1,0 +1,127 @@
+Array
+(
+    [duration] => 3
+    [speed] => 6
+    [slides] => Array
+        (
+            [0] => WP_Post Object
+                (
+                    [ID] => 110
+                    [post_author] => 1
+                    [post_date] => 2014-04-18 10:45:37
+                    [post_date_gmt] => 2014-04-18 14:45:37
+                    [post_content] => test
+                    [post_title] => test
+                    [post_excerpt] => 
+                    [post_status] => publish
+                    [comment_status] => closed
+                    [ping_status] => closed
+                    [post_password] => 
+                    [post_name] => test
+                    [to_ping] => 
+                    [pinged] => 
+                    [post_modified] => 2014-04-23 11:03:04
+                    [post_modified_gmt] => 2014-04-23 15:03:04
+                    [post_content_filtered] => 
+                    [post_parent] => 0
+                    [guid] => http://localhost/WP/?post_type=slide&p=110
+                    [menu_order] => 0
+                    [post_type] => slide
+                    [post_mime_type] => 
+                    [comment_count] => 0
+                    [filter] => raw
+                    [featured_image] => Array
+                        (
+                            [width] => 334
+                            [height] => 221
+                            [file] => girl-in-aisle.jpg
+                            [sizes] => Array
+                                (
+                                    [thumbnail] => Array
+                                        (
+                                            [file] => girl-in-aisle-150x150.jpg
+                                            [width] => 150
+                                            [height] => 150
+                                            [mime-type] => image/jpeg
+                                        )
+
+                                    [small] => Array
+                                        (
+                                            [file] => girl-in-aisle-300x198.jpg
+                                            [width] => 300
+                                            [height] => 198
+                                            [mime-type] => image/jpeg
+                                        )
+
+                                )
+
+                            [image_meta] => Array
+                                (
+                                    [aperture] => 0
+                                    [credit] => 
+                                    [camera] => 
+                                    [caption] => 
+                                    [created_timestamp] => 0
+                                    [copyright] => 
+                                    [focal_length] => 0
+                                    [iso] => 0
+                                    [shutter_speed] => 0
+                                    [title] => 
+                                )
+
+                            [url] => http://localhost/WP/wp-content/uploads/girl-in-aisle.jpg
+                        )
+
+                    [meta] => Array
+                        (
+                            [_kin_url] => http://mylink.com
+                            [_kin_background] => Array
+                                (
+                                    [width] => 335
+                                    [height] => 223
+                                    [file] => communion-notice.jpg
+                                    [sizes] => Array
+                                        (
+                                            [thumbnail] => Array
+                                                (
+                                                    [file] => communion-notice-150x150.jpg
+                                                    [width] => 150
+                                                    [height] => 150
+                                                    [mime-type] => image/jpeg
+                                                )
+
+                                            [small] => Array
+                                                (
+                                                    [file] => communion-notice-300x199.jpg
+                                                    [width] => 300
+                                                    [height] => 199
+                                                    [mime-type] => image/jpeg
+                                                )
+
+                                        )
+
+                                    [image_meta] => Array
+                                        (
+                                            [aperture] => 0
+                                            [credit] => 
+                                            [camera] => 
+                                            [caption] => 
+                                            [created_timestamp] => 0
+                                            [copyright] => 
+                                            [focal_length] => 0
+                                            [iso] => 0
+                                            [shutter_speed] => 0
+                                            [title] => 
+                                        )
+
+                                    [url] => http://localhost/WP/wp-content/uploads/communion-notice.jpg
+                                )
+
+                            [_kin_comments] => My cool test comments.
+                        )
+
+                )
+
+        )
+
+)
