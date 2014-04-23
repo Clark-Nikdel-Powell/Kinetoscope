@@ -133,10 +133,13 @@ function kin_print_meta($post) {
 				if ($meta->type == 'textarea')
 					echo '<textarea class="widefat" name="'.$key.'">'.get_post_meta($post->ID,$key,true).'</textarea>';
 				elseif ($meta->type == 'image') {
+
+					$image = wp_get_attachment_image(get_post_meta($post->ID,$key,true), 'thumbnail');
+
 					echo '<br/>';
 					echo '<input type="hidden" name="'.$key.'" />';
-					echo '<a href="#" class="button kin_add_media" data-editor="' . esc_attr( $key ) . '">' . __( 'Add Media' ) . '</a>';
-					echo '<div id="'.$key.'"><img src="'.get_post_meta($post->ID,$key,true).'" /></div>';
+					echo '<a href="#" class="button kin_add_media" data-editor="'.esc_attr($key).'">Select Image</a>';
+					echo '<a href="#" class="kin_add_media" data-editor="'.esc_attr($key).'"><div id="'.$key.'">'.$image.'</div></a>';
 				}
 				else
 					echo '<input type="text" class="widefat" name="'.$key.'" value="'.get_post_meta($post->ID,$key,true).'" />';

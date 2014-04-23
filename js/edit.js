@@ -22,15 +22,12 @@ jQuery(document).ready(function($) {
 
 		file_frame.on("select",function() {
 			
-			attachment = file_frame.state().get("selection").first().toJSON();
+			var attachment = file_frame.state().get("selection").first().toJSON();
+			var id = attachment["id"];
+			var thumbnail = attachment["sizes"]["thumbnail"]["url"]
+			var image = "<img src=\"" + thumbnail + "\" />";
 
-			console.log(attachment);
-
-			var url = attachment["url"];
-
-			$("input[name='" + editor + "']").val(url);
-
-			var image = "<img src=\"" + url + "\" />";
+			$("input[name='" + editor + "']").val(id);
 			$("#" + editor).html(image);
 		});
 
