@@ -12,58 +12,59 @@ function kin_create_objects() {
 	$psing = ucwords($ptax);
 	$pplur = $psing.'s';
 
-	$labels = array(
+	$type_labels = array(
 		'name' => $pplur
-		,'singular_name' => $psing
-		,'add_new_item' => 'Add New '.$psing
-		,'edit_item' => 'Edit '.$psing
-		,'new_item' => 'New '.$psing
-		,'view_item' => 'View '.$psing
-		,'search_items' => 'Search '.$pplur
-		,'not_found' => 'No '.$pplur.' Found'
-		,'not_found_in_trash' => 'No '.$pplur.' Found In Trash'
+	,   'singular_name' => $psing
+	,   'add_new_item' => 'Add New '.$psing
+	,   'edit_item' => 'Edit '.$psing
+	,   'new_item' => 'New '.$psing
+	,   'view_item' => 'View '.$psing
+	,   'search_items' => 'Search '.$pplur
+	,   'not_found' => 'No '.$pplur.' Found'
+	,   'not_found_in_trash' => 'No '.$pplur.' Found In Trash'
 	);
-	$args = array(
-		'labels' => $labels
-		,'public' => true
-		,'has_archive' => false
-		,'exclude_from_search' => true
-		,'menu_position'
-		,'menu_icon' => 'dashicons-images-alt2'
-		,'supports' => array(
+	$type_args = array(
+		'labels' => $type_labels
+	,   'public' => true
+	,   'has_archive' => false
+	,   'exclude_from_search' => true
+	,	'publicly_queryable' => false
+	,   'menu_position'
+	,   'menu_icon' => 'dashicons-images-alt2'
+	,   'supports' => array(
 			'title'
 			,'editor'
 			,'thumbnail'
 			,'comments' => false
 		)
 	);
-	register_post_type($ptax,$args);
+	register_post_type($ptax,$type_args);
 
 
 	$ttax = SLIDESHOW_TAX;
 	$tsing = ucwords($ttax);
 	$tplur = $tsing.'s';
 
-	$labels = array(
+	$tax_labels = array(
 		'name' => $tplur
-		,'singular_name' => $tsing
-		,'all_items' => 'All '.$tplur
-		,'edit_item' => 'Edit '.$tsing
-		,'view_item' => 'View '.$tsing
-		,'update_item' => 'Update '.$tsing
-		,'add_new_item' => 'Add New '.$tsing
-		,'search_items' => 'Search '.$tplur
-		,'popular_items' => 'Popular '.$tplur
-		,'add_or_remove_items' => 'Add or remove '.$tplur
-		,'choose_from_most_used' => 'Choose from most used '.$tplur
-		,'not_found' => 'No '.$tplur.' Found'
+	,   'singular_name' => $tsing
+	,   'all_items' => 'All '.$tplur
+	,   'edit_item' => 'Edit '.$tsing
+	,   'view_item' => 'View '.$tsing
+	,   'update_item' => 'Update '.$tsing
+	,   'add_new_item' => 'Add New '.$tsing
+	,   'search_items' => 'Search '.$tplur
+	,   'popular_items' => 'Popular '.$tplur
+	,   'add_or_remove_items' => 'Add or remove '.$tplur
+	,   'choose_from_most_used' => 'Choose from most used '.$tplur
+	,   'not_found' => 'No '.$tplur.' Found'
 	);
-	$args = array(
-		'labels' => $labels
-		,'hierarchical' => true
-		,'show_admin_column' => true
+	$tax_args = array(
+		'labels' => $tax_labels
+	,   'hierarchical' => true
+	,   'show_admin_column' => true
 	);
-	register_taxonomy($ttax,$ptax,$args);
+	register_taxonomy($ttax,$ptax,$tax_args);
 }
 
 
@@ -94,23 +95,23 @@ function kin_create_meta() {
 		if (count($metas)>0) {
 			$key = 'meta';
 			add_meta_box(
-				'kin_'.$key 
-				,ucwords(SLIDE_TAX.' '.$key)
-				,'kin_print_meta'
-				,$posttype
-				,'normal'
-				,'core'
+				'kin_'.$key
+			,   ucwords(SLIDE_TAX.' '.$key)
+			,   'kin_print_meta'
+			,   $posttype
+			,   'normal'
+			,   'core'
 			);
 		}
 	}
 
 	add_meta_box(
 		'kin_position'
-		,ucwords(SLIDESHOW_TAX).' Positions'
-		,'kin_print_order'
-		,$posttype
-		,'normal'
-		,'core'
+	,   ucwords(SLIDESHOW_TAX).' Positions'
+	,   'kin_print_order'
+	,   $posttype
+	,   'normal'
+	,   'core'
 	);
 }
 
@@ -128,7 +129,7 @@ function kin_print_meta($post) {
 		if (count($metas)>0) {
 			foreach ($metas as $key=>$meta) {
 				echo '<p>';
-				echo '<strong>'.$meta->name.'</strong>';
+				echo '<strong>'. ucfirst($meta->name) .'</strong>';
 
 				if ($meta->type == 'textarea')
 					echo '<textarea class="widefat" name="'.$key.'">'.get_post_meta($post->ID,$key,true).'</textarea>';
@@ -153,29 +154,29 @@ function kin_print_meta($post) {
 
 
 function kin_save_order() {
-	
+
 	global $wpdb;
 	$pre = $wpdb->prefix;
-	
+
 	echo 'working';
 
-	if ($_POST 
-		&& isset($_POST['id']) 
-		&& isset($_POST['data']) 
+	if ($_POST
+		&& isset($_POST['id'])
+		&& isset($_POST['data'])
 		&& $slides = json_decode($_POST['data'])
 	) {
 		$wpdb->query("DELETE FROM ".$pre.KIN_TBLNAME." WHERE term_id = '".$_POST['id']."'");
 		foreach ($slides as $key=>$slide) {
-		
+
 			$wpdb->query("
 				INSERT INTO ".$pre.KIN_TBLNAME." (
 					term_id
-					,post_id
-					,position
+				,   post_id
+				,   position
 				) VALUES (
 					'".$_POST['id']."'
-					,'".$slide."'
-					,'".$key."'
+				,   '".$slide."'
+				,   '".$key."'
 				)
 			");
 		}
@@ -186,7 +187,7 @@ function kin_save_order() {
 
 
 function kin_remove_slide() {
-	if ($_POST 
+	if ($_POST
 		&& isset($_POST['id'])
 		&& isset($_POST['term_id'])
 	) {
@@ -199,7 +200,7 @@ function kin_remove_slide() {
 				array_push($keep,$term->term_id);
 			}
 		}
-		
+
 		if ($keep && count($keep)>0) wp_set_post_terms($_POST['id'], $keep, 'slideshow');
 		else wp_delete_object_term_relationships($_POST['id'],'slideshow');
 	}
@@ -235,7 +236,7 @@ function kin_save_meta($post_id) {
 		}
 	}
 
-	
+
 }
 
 

@@ -1,7 +1,7 @@
 jQuery(document).ready(function($) {
 	$(function() {
 		$(".kin-slideshow").sortable({
-			placeholder: "kin-slides kin-placeholder"
+			placeholder: "kin-slides kin-slides-small kin-placeholder"
 			,revert: true
 			,update: function(event, ui) {
 
@@ -31,7 +31,7 @@ jQuery(document).ready(function($) {
 						var title = $("#"+$(liparent).attr("id")+"_slug");
 						$(title).addClass("kin-updated");
 						setTimeout(
-							function(){ 
+							function(){
 								$(title).removeClass("kin-updated")
 							},3000
 						);
@@ -40,7 +40,7 @@ jQuery(document).ready(function($) {
 			}
 		}).disableSelection();
 
-		
+
 		$(".kin-trash").droppable({
 			hoverClass: "kin-hover"
 			,tolerance: "pointer"
@@ -58,7 +58,7 @@ jQuery(document).ready(function($) {
 						ui.draggable.remove();
 					}
 				});
-				
+
 			}
 		});
 	});
