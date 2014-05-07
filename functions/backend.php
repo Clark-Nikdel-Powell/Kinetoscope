@@ -106,7 +106,7 @@ function kin_create_meta() {
 
 	add_meta_box(
 		'kin_position'
-		,'Slideshow Positions'
+		,ucwords(SLIDESHOW_TAX).' Positions'
 		,'kin_print_order'
 		,$posttype
 		,'normal'
@@ -261,7 +261,7 @@ function kin_print_order() {
 
 
 function kin_create_sort_page() {
-	add_submenu_page('edit.php?post_type=slide','Slideshow Sort Order','Sort Order','edit_pages','kin-sort-page',function() { kin_print_order(false); });
+	add_submenu_page('edit.php?post_type='.SLIDE_TAX,'Slideshow Sort Order','Sort Order','edit_pages','kin-sort-page',function() { kin_print_order(false); });
 }
 
 ?>

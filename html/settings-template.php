@@ -9,7 +9,7 @@
 		<table class="form-table" style="margin-bottom:20px;">
 		<tr valign="top">
 			<th scope="row">
-			<label for="<?= KIN_OPTION_DURATION ?>">Slide Duration</label>
+			<label for="<?= KIN_OPTION_DURATION ?>">Duration</label>
 			</th>
 			<td>
 				<input type="number" name="<?= KIN_OPTION_DURATION ?>" id="<?= KIN_OPTION_DURATION ?>" class="small-text" value="<?php form_option(KIN_OPTION_DURATION) ?>"> (seconds)
@@ -25,7 +25,7 @@
 		</tr>
 		<tr valign="top">
 			<th scope="row">
-			<label for="kin_meta">Additional Slide Meta</label>
+			<label for="kin_meta">Additional <?= SLIDE_TAX ?> Meta</label>
 			</th>
 			<td>
 				<input type="hidden" name="<?= KIN_OPTION_FIELDS ?>" id="<?= KIN_OPTION_FIELDS ?>" value="<?= form_option(KIN_OPTION_FIELDS) ?>" />

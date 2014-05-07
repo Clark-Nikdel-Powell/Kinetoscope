@@ -18,4 +18,6 @@ add_action('delete_post', 					'kin_delete_post_order');
 
 add_action('admin_init',					'kin_register_options');
 add_action('admin_menu',					'kin_create_options');
+
+add_theme_support('post-thumbnails');
 ?>

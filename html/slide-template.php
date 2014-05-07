@@ -16,7 +16,7 @@
 		}
 		else {
 			?>
-		No slides have been added to this slideshow.
+		No <?= strtolower(SLIDE_TAX) ?>(s) have been added to this <?= strtolower(SLIDESHOW_TAX) ?>.
 			<?php	
 		}
 		?>

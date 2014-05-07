@@ -9,7 +9,7 @@
 function get_slideshow($showname) {
 
 	// only continue if slideshow name is providerd
-	if ($showname && term_exists($showname,'slideshow') && $term = get_term_by('slug',$showname,'slideshow')) {
+	if ($showname && term_exists($showname, SLIDESHOW_TAX) && $term = get_term_by('slug', $showname, SLIDESHOW_TAX)) {
 
 		// set our master slideshow array
 		$slideshow = array();
@@ -21,7 +21,7 @@ function get_slideshow($showname) {
 		// get all related slides
 		$slides = get_posts(
 			array(
-				'post_type' => 'slide'
+				'post_type' => SLIDE_TAX
 				,'post_status' => 'publish'
 				,'posts_per_page' => -1
 				,'slideshow' => $showname

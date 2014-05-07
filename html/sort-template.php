@@ -5,14 +5,14 @@ $editslide = false;
 
 if (isset($post) && $post) {
 	$editslide = true;
-	$shows = wp_get_post_terms($post->ID,'slideshow');
+	$shows = wp_get_post_terms($post->ID, SLIDESHOW_TAX);
 }
-else $shows = get_terms('slideshow');
+else $shows = get_terms(SLIDESHOW_TAX);
 
 
 if ($editslide !== true) {
 	?>
-<h2>Slideshow Sort Order</h2>
+<h2><?= ucwords(SLIDESHOW_TAX) ?> Sort Order</h2>
 	<?php
 }
 ?>
@@ -30,12 +30,12 @@ else {
 
 	if ($editslide == true) {
 		?>
-		This slide has not been added to any slideshows.
+		This <?= strtolower(SLIDE_TAX) ?> has not been added to any <?= strtolower(SLIDESHOW_TAX) ?>.
 		<?php
 	}
 	else {
 		?>
-	No slideshows have been created yet.
+	No <?= strtolower(SLIDESHOW_TAX) ?> have been created yet.
 		<?php
 	}
 }
