@@ -105,14 +105,14 @@ function kin_create_meta() {
 		}
 	}
 
-	add_meta_box(
-		'kin_position'
-	,   ucwords(SLIDESHOW_TAX).' Positions'
-	,   'kin_print_order'
-	,   $posttype
-	,   'normal'
-	,   'core'
-	);
+	// add_meta_box(
+	// 	'kin_position'
+	// ,   ucwords(SLIDESHOW_TAX).' Positions'
+	// ,   'kin_print_order'
+	// ,   $posttype
+	// ,   'normal'
+	// ,   'core'
+	// );
 }
 
 

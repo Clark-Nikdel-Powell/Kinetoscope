@@ -14,9 +14,9 @@ jQuery(document).ready(function($) {
 	function htmlify(obj,name) {
 		var html = "";
 		html += "<tr id=\"" + name + "_row\">";
-		html += "<td style=\"padding:0px;\"><input class=\"kin_update\" data-for=\"" + name + "\" type=\"text\" value=\"" + obj["name"] + "\" /></td>";
-		html += "<td style=\"padding:0px;\">" + obj["type"] + "</td>";
-		html += "<td style=\"padding:0px;\"><div class=\"dashicons dashicons-no kin_remove\" data-for=\"" + name + "\"></div></td>";
+		html += "<td><input class=\"kin_update\" data-for=\"" + name + "\" type=\"text\" value=\"" + obj["name"] + "\" /></td>";
+		html += "<td>" + obj["type"] + "</td>";
+		html += "<td><div class=\"dashicons dashicons-no kin_remove\" data-for=\"" + name + "\"></div></td>";
 		html += "</tr>";
 		return html;
 	}
@@ -51,7 +51,7 @@ jQuery(document).ready(function($) {
 				if (!_kin_fields[newslug]) {
 
 					if (quantify(_kin_fields)==0) _kin_fields = ({});
-	
+
 					_kin_fields[newslug] = ({
 						 name:newname
 						,type:newtype
@@ -59,7 +59,7 @@ jQuery(document).ready(function($) {
 
 					var json = JSON.stringify(_kin_fields);
 					$("#_kin_fields").val(json);
-					
+
 					var html = htmlify(_kin_fields[newslug],newslug);
 					$("#kin_meta_table tr:last").after(html);
 
@@ -90,5 +90,5 @@ jQuery(document).ready(function($) {
 		$("#_kin_fields").val(json);
 	});
 
-	
+
 });
