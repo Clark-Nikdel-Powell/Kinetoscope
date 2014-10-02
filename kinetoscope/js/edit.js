@@ -1,7 +1,7 @@
 jQuery(document).ready(function($) {
 
 	var file_frame;
-	jQuery(".kin_add_media").live("click", function( event ){
+	jQuery(".kin_add_media").on("click", function( event ){
 
 		var editor = $(this).data("editor");
 		event.preventDefault();
