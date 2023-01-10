@@ -98,7 +98,7 @@ function get_slideshow($showname) {
 			}
 			
 			// get all meta fields for each slide
-			if (is_object($metas) && count($metas)>0) {
+			if (is_object($metas) && !empty($metas)) {
 
 				// set array
 				$slides[$key]->meta = array();
